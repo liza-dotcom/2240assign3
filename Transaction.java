@@ -1,10 +1,15 @@
+package classes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transaction {
 
+	// making the private constructor to convert to singleton
+	private Transaction () {}
+	// creating an instance variable to access all the methods of the singleton class
+	private static Transaction instance;
     // Perform the borrowing of a book
-    public static boolean borrowBook(Book book, Member member) {
+    public  boolean borrowBook(Book book, Member member) {
         if (book.isAvailable()) {
             book.borrowBook();
             member.borrowBook(book); 
@@ -18,7 +23,7 @@ public class Transaction {
     }
 
     // Perform the returning of a book
-    public static void returnBook(Book book, Member member) {
+    public  void returnBook(Book book, Member member) {
         if (member.getBorrowedBooks().contains(book)) {
             member.returnBook(book);
             book.returnBook();
@@ -30,8 +35,16 @@ public class Transaction {
     }
 
     // Get the current date and time in a readable format
-    private static String getCurrentDateTime() {
+    private  String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
+    }
+    public static Transaction getTransaction()
+    {
+    	if (instance==null)
+    	{
+    		instance= new Transaction(); // Create a new instance if there was no single/only instance initially.
+    	}
+    	return instance;
     }
 }

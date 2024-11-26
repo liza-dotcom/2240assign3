@@ -1,3 +1,4 @@
+package classes;
 import java.util.Scanner;
 
 public class LibraryManagement {
@@ -5,6 +6,7 @@ public class LibraryManagement {
 
     public static void main(String[] args) {
         new LibraryManagement().run();
+        Transaction transaction= Transaction.getTransaction();
     }
 
     private void run() {
@@ -76,7 +78,7 @@ public class LibraryManagement {
                     Book book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	Transaction.borrowBook(book, member);
+                    	Transaction.getTransaction().borrowBook(book, member);
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
@@ -94,7 +96,7 @@ public class LibraryManagement {
                     book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	Transaction.returnBook(book, member);
+                    	Transaction.getTransaction().returnBook(book, member);
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
@@ -116,7 +118,7 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	Transaction.displayTransactionHistory();
+                	Transaction.getTransaction().displayTransactionHistory();
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");
