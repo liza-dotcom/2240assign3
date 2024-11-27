@@ -71,4 +71,31 @@ public class Transaction {
     		System.out.println("There was an error in writing the file:" + e.getMessage());
     	}
     }
+  //Method to read history/details from .txt file and then displaying them.
+    public void displayTransactionHistory()
+    {
+    	try
+    	{
+    		//Accessing the file to be read
+        	FileReader read = new FileReader("transactions.txt");
+        	BufferedReader bufferedReader= new BufferedReader (read);
+        	//Read and show/display each line of file
+        	System.out.println("Here is the history of the transactions:");
+        	String history;
+        	while ((history=bufferedReader.readLine())!= null)// display history till the .txt file is not empty/null.
+        	{
+        		System.out.println(history);
+        	}
+    	}
+    	catch (FileNotFoundException e)// handle the exception if file is not found
+    	{
+    		System.out.println("The transaction history file was not found!");
+    	}
+    	catch (IOException e)// handle any other exception encountered while reading the file.
+    	{
+    		System.out.println("There was an error in reading the files:" + e.getMessage());
+    	}
+    	
+    }
+    
 }
