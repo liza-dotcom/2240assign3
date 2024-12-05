@@ -1,11 +1,15 @@
-package classes;
+package src.classes;
+
 import static org.junit.Assert.assertFalse;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 class LibraryManagementTest {
 	
@@ -82,5 +86,27 @@ class LibraryManagementTest {
         boolean returnFail = transaction.returnBook(book, member);
         assertFalse(returnFail, "Returning should fail for a book that is already available.");
     }
+ // Test for Singleton enforcement in Transaction class
+    @Test
+    public void testSingletonTransaction() {
+        try {
+            // Retrieve the constructor of the Transaction class
+            Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor();
+
+            // Assert that the constructor is private
+            int modifiers = constructor.getModifiers();
+            assertTrue(Modifier.isPrivate(modifiers), "The Transaction constructor should be private.");
+
+            // Try to make the constructor accessible to create an instance (illegal for a singleton)
+            constructor.setAccessible(true);
+            Transaction newInstance = constructor.newInstance();
+            fail("The Singleton pattern is violated! Direct instantiation of Transaction should not be allowed.");
+        } catch (Exception e) {
+            // Expected exception when trying to instantiate a private constructor
+            assertTrue(e instanceof IllegalAccessException || e.getCause() instanceof IllegalStateException,
+                    "Expected exception should occur for direct instantiation of Singleton.");
+        }
+    }
 }
     
+  
