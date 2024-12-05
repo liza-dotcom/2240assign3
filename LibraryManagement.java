@@ -1,16 +1,29 @@
 package classes;
 import java.util.Scanner;
 
+import src.classes.Book;
+import src.classes.Library;
+import src.classes.LibraryManagement;
+import src.classes.Member;
+import src.classes.Transaction;
+
+import java.util.Scanner;
+
 public class LibraryManagement {
-    private Library library = new Library();
+	
+	private Library library = new Library();
 
     public static void main(String[] args) {
         new LibraryManagement().run();
         Transaction transaction= Transaction.getTransaction();
+      
+       
     }
+        
+    
 
     private void run() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in) ;
         boolean running = true;
 
         while (running) {
@@ -37,6 +50,8 @@ public class LibraryManagement {
                     String name = scanner.next();
                     
                     scanner.nextLine();
+                    
+                  
 
                     Member newMember = new Member(id, name);
                     library.addMember(newMember);
@@ -45,14 +60,17 @@ public class LibraryManagement {
                 case 2:
                     System.out.print("Enter book ID: ");
                     id = scanner.nextInt();
+                    scanner.nextLine();
                 	System.out.print("Enter book title: ");
                     String title = scanner.next();
-                    
-                    scanner.nextLine();
-
-                    Book newBook = new Book(id, title);
-                    library.addBook(newBook);
-                    System.out.println("Book added to library successfully.");
+                   
+                    try {
+                        Book newBook = new Book(id, title); // Book constructor validates the ID
+                        library.addBook(newBook);
+                        System.out.println("Book added to library successfully.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
@@ -117,9 +135,9 @@ public class LibraryManagement {
                         System.out.println("Invalid member ID.");
                     }
                     break;
-                case 6:
-                	Transaction.getTransaction().displayTransactionHistory();
-                    break;
+               case 6:
+              	Transaction.getTransaction().displayTransactionHistory();
+                   break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");
                     running = false;
@@ -129,4 +147,5 @@ public class LibraryManagement {
             }
         }
     }
+
 }
